@@ -1,0 +1,13 @@
+# --- Global / General ---
+.DS_Store
+node_modules/
+.vscode/
+.env
+
+# --- .NET (Backend) Ignores ---
+bin/
+obj/
+.vs/
+*.user
+*.suo
+appsettings.Development.json

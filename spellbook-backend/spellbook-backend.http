@@ -1,0 +1,6 @@
+@spellbook_backend_HostAddress = http://localhost:5096
+
+GET {{spellbook_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
