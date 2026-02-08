@@ -3,22 +3,21 @@ import Link from 'next/link';
 interface ClassCardProps{
     name: string;
     value: string;
-    className?: string;
 }
 
-export default function ClassCard({name, value, className=""}: ClassCardProps){
+export default function ClassCard({name, value}: ClassCardProps){
     return(
-        <Link 
-            href={`/spells?spellList=${value}`}
-            className={`
-                    block p-6 text-center border border-zinc-800 rounded-r-xl 
-                    bg-zinc-900 text-zinc-100 font-bold text-lg 
-                    hover:border-red-600 hover:scale-105 transition-all duration-200  
-                    shadow-lg hover-red-900/20  
-                    ${className}
-                `}
-        >
-            {name}
+        <Link href={`/spells?spellList=${value}`}className="group">
+            <div className="bg-surface border border-border rounded-xl p-6 h-full transition-all duration-300 
+            hover:bg-surface-hover hover:border-primary hover:shadow-lg hover:shadow-primary/20">
+                <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    {name}
+                </h3>
+
+                <p className="text-muted text-sm mt-2">
+                    Browser spells for {name}
+                </p>
+            </div>
         </Link>
     );
 }

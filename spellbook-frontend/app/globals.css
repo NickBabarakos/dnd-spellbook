@@ -1,19 +1,58 @@
 @import "tailwindcss";
 
 :root{
+  /*Basic Colors */
   --background: #09090b;
+  --surface: #18181b;
+  --surface-hover: #27272a;
+  /*Text*/
   --foreground: #fafafa;
+  --muted: #a1a1aa;
+  /*Accents (D&D Reds)*/
   --primary: #dc2626;
+  --primary-hover: #ef4444;
+  --primary-deep: #7f1d1d;
+  /*Borders*/
+  --border: #27272a;
 }
 
 @theme{
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-deep: var(--primary-deep);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
 }
 
 body{
   background-color: var(--background);
   color:var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@utilty card{
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.2s ease-in-out;
+  &:hover{
+    background-color: var(--surface-hover);
+    border-color: var(--primary);
+
+  }
+}
+
+@layer utilities {
+  .no-spinner::-webkit-outer-spin-button,
+  .no-spinner::-webkit-inner-spin-button{
+    -webkit-apperance:none;
+    margin: 0;
+  }
+
+  .no-spinner{ -moz-appearance: textfield;}
 }
