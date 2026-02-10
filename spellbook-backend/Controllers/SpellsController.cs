@@ -40,7 +40,7 @@ public class SpellsController : ControllerBase
         //We start with the full set of spells but do not execute any SQL yet/
         var query = _context.Spells.AsQueryable()
                     .ApplyFilters(filter) //Dynamically adds WHERE clauses
-                    .ApplySorting(filter) //Adds ORDER BY clauses
+                    .OrderByName()
                     .ApplyPagination(filter.Page, filter.PageSize); // Adds OFFSET/LIMIT (page/page size)
 
         

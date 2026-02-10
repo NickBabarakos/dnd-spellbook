@@ -9,16 +9,6 @@ namespace spellbook_backend.Extensions;
 /// </summary>
 public static class SpellProjectionExtensions
 {
-    /// <summary>
-    /// Transform the generic <see cref="Spell"/> query into a specific <see cref="SpellResponseDto"/> query.
-    /// This method generates a SQL SELECT statement that retrieves only the required columns.  
-    /// </summary>
-    /// <param name="query">The source queryable of Spell entities.</param>
-    /// <param name="spellList">
-    /// The specific character class (e.g. "Wizard") context.
-    /// Used to calculate the correct 'Rating' for the spell within that class's context.
-    /// </param>
-    /// <returns>An <see cref="IQueryable{SpellResponseDto}"/> ready for execution</returns>
     public static IQueryable<SpellResponseDto> ProjectToDto(this IQueryable<Spell> query, string? spellList)
     {
         // The .Select() method translates to the SQL SELECT clause.
@@ -26,18 +16,17 @@ public static class SpellProjectionExtensions
         {
             Id = s.Id,
             Name = s.Name,
-            SchoolOfMagic = s.SchoolOfMagic,
             Level = s.Level,
             Source = s.Source,
-            Tags = s.Tags,
-            IsRitual = s.IsRitual,
+            SchoolOfMagic = s.SchoolOfMagic,
             //Conditional Projection based in external parameter (spellList). 
             Rating = string.IsNullOrEmpty(spellList)
-                        ? 0
-                        : s.ClassSpells
-                            .Where(cs => cs.ClassName.ToLower() == spellList.ToLower())
-                            .Select(cs => cs.Rating)
-                            .FirstOrDefault(),
+                ? string.Empty 
+                : s.ClassSpells
+                    .Where(cs => cs.ClassName.ToLower() == spellList.ToLower())
+                    .Select(cs => cs.Rating)
+                    .FirstOrDefault() ?? string.Empty,
+
             Description = s.Description,
             //Maps the internal domain model (SpellMetaData) to the public API model (SpellMetaDataResponseDto)
             MetaData = new SpellMetaDataResponseDto
@@ -45,7 +34,8 @@ public static class SpellProjectionExtensions
                 CastingTime = s.MetaData.CastingTime,
                 Range = s.MetaData.Range,
                 Components = s.MetaData.Components, 
-                Duration = s.MetaData.Duration
+                Duration = s.MetaData.Duration,
+                IsRitual = s.MetaData.ActionType != null && s.MetaData.ActionType.Contains("Ritual")
             }
         });
     }

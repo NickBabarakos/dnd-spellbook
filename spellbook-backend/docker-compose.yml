@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: spellbook-db 
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: SpellbookDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - spellbook_data:/var/lib/postgresql/data
+volumes:
+  spellbook_data:

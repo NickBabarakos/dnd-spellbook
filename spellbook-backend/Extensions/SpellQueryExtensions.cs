@@ -10,80 +10,63 @@ namespace spellbook_backend.Extensions;
 public static class SpellQueryExtensions
 {
     // --- Basic Filters ---
-    /// <summary>
-    /// Filters spells by name using a case-insensitive search.
-    /// </summary>
-    /// <param name="query">The current queryable object.</param>
-    /// <param name="name">The search term. If null or empty, no filter is applied.</param>
+    public static IQueryable<Spell> FilterBySpellList(this IQueryable<Spell> query, string spellList){
+        if(string.IsNullOrEmpty(spellList)) {return query;}
+        return query.Where(s=> s.SpellLists.Any(sl => sl.ToLower() == spellList.ToLower()));
+    }
     public static IQueryable<Spell> FilterByName(this IQueryable<Spell> query, string? name)
     {
         if(string.IsNullOrEmpty(name)){ return query;}
         return query.Where(s=> s.Name.ToLower().Contains(name.ToLower()));
     }
 
-    /// <summary>
-    /// Filters spells that belong to any of the specified schools of magic.
-    /// </summary>
+    public static IQueryable<Spell> FilterByLevel(this IQueryable<Spell> query, string[]? level)
+    {
+        if(level == null || level.Length<=0) { return query;}
+        return query.Where(s=> level.Contains(s.Level));
+    }
+
+
     public static IQueryable<Spell> FilterBySchool(this IQueryable<Spell> query, string[]? schoolOfMagic)
     {
         if(schoolOfMagic == null || schoolOfMagic.Length<=0){ return query;}
         return query.Where(s=> schoolOfMagic.Contains(s.SchoolOfMagic));
     }
 
-    /// <summary>
-    /// Filters spells based on their level (0=Cantrip, 1-9)
-    /// </summary>
-    public static IQueryable<Spell> FilterByLevel (this IQueryable<Spell> query, int[]? level)
-    {
-        if(level == null || level.Length<=0) { return query;}
-        return query.Where(s=> level.Contains(s.Level));
-    }
-
-    /// <summary>
-    /// Filters spells based on their source book (e.g. PHB, Tasha's)
-    /// </summary>
-    public static IQueryable<Spell> FilterBySource (this IQueryable<Spell> query, string[]? source)
-    {
-        if(source==null || source.Length<=0) {return query;}
-        return query.Where(s=> source.Contains(s.Source));
-    }
-
-    /// <summary>
-    /// Filters spells that contain at least one of the specified tags.
-    /// </summary>
-    public static IQueryable<Spell> FilterByTags (this IQueryable<Spell> query, string[]? tags)
-    {
-        if(tags==null || tags.Length<=0) { return query;}
-        return query.Where(s=> s.Tags.Any(t => tags.Contains(t)));
-    }
-
-    /// <summary>
-    /// Filters spells based on their Ritual status.
-    /// </summary>
-    public static IQueryable<Spell> FilterIsRitual (this IQueryable<Spell> query, bool? isRitual)
-    {
-        if(isRitual == null){ return query;}
-        return query.Where(s=> isRitual == s.IsRitual);
-    }
 
     // --- JSON Metadata Filters (Querying the JSONB column)---
+    public static IQueryable<Spell> FilterByActionType (this IQueryable<Spell> query, string[]? actionType)
+    {
+        if(actionType == null || actionType.Length <=0) {return query;}
+        return query.Where(s=> s.MetaData.ActionType != null && 
+                               s.MetaData.ActionType.Any(t=> actionType.Contains(t)));
+    }
 
-    /// <summary>
-    /// Filters spells with a casting time greater than, lesser than or equal to the specified value.
-    /// Queries the JSON 'Metadata' Column
-    /// </summary>
     public static IQueryable<Spell> FilterMinCastingTime (this IQueryable<Spell> query, int? minCastingTime)
     {
         if(minCastingTime == null) { return query;}
         return query.Where(s=> s.MetaData.CastingTime >= minCastingTime);
     }
 
-    public static IQueryable<Spell> FilterMaxCastingTime (this IQueryable<Spell> query, int? maxCastingTime)
-    {
+    public static IQueryable<Spell> FilterMaxCastingTime (this IQueryable<Spell> query, int? maxCastingTime){
         if(maxCastingTime == null) { return query;}
         return query.Where(s=> s.MetaData.CastingTime <= maxCastingTime);
     }
+    public static IQueryable<Spell> FilterMinDuration(this IQueryable<Spell> query, int? minDuration){
+        if(minDuration == null) {return query;}
+        return query.Where(s=> s.MetaData.Duration >= minDuration);
+    }
 
+    public static IQueryable<Spell> FilterMaxDuration(this IQueryable<Spell> query, int? maxDuration)
+    {
+        if(maxDuration == null) {return query;}
+        return query.Where(s=> s.MetaData.Duration <= maxDuration); 
+    }
+    public static IQueryable<Spell> FilterByComponents(this IQueryable<Spell> query, string[]? components){
+        if(components == null || components.Length <= 0) {return query;}
+        return query.Where(s => s.MetaData.Components != null &&
+                                s.MetaData.Components.Any(t=> components.Contains(t)));
+    }
     public static IQueryable<Spell> FilterMinRange (this IQueryable<Spell> query, int? minRange)
     {
         if(minRange == null) { return query;}
@@ -94,6 +77,41 @@ public static class SpellQueryExtensions
     {
         if(maxRange == null) { return query;}
         return query.Where(s=> s.MetaData.Range <= maxRange);
+    }
+    public static IQueryable<Spell> FilterMinTargets(this IQueryable<Spell> query, int? minTargets)
+    {
+        if(minTargets  == null){ return query;}
+        return query.Where(s=> s.MetaData.Targets >= minTargets);
+    }
+
+    public static IQueryable<Spell> FilterMaxTargets(this IQueryable<Spell> query, int? maxTargets)
+    {
+        if(maxTargets == null){return query;}
+        return query.Where(s=> s.MetaData.Targets <= maxTargets);
+    }
+    public static IQueryable<Spell> FilterByTargetRelationship(this IQueryable<Spell> query, string[]? targetRelationship)
+    {
+        if(targetRelationship==null || targetRelationship.Length<=0) { return query;}
+        return query.Where(s=> s.MetaData.TargetRelationship.Any(t=> targetRelationship.Contains(t)));
+    }
+
+    public static IQueryable<Spell> FilterByAttackType(this IQueryable<Spell> query, string[]? attackType)
+    {
+        if(attackType == null || attackType.Length<=0) {return query;}
+        return query.Where(s=> s.MetaData.AttackType != null && 
+                               s.MetaData.AttackType.Any(t=> attackType.Contains(t)));
+    }
+
+    public static IQueryable<Spell> FilterByRollType(this IQueryable<Spell> query, string[]? rollType){
+        if(rollType == null || rollType.Length<=0) {return query;}
+        return query.Where(s=> s.MetaData.RollType != null && 
+                            s.MetaData.RollType.Any(t=> rollType.Contains(t)));
+    }
+
+    public static IQueryable<Spell> FilterByAbility(this IQueryable<Spell> query, string[]? ability){
+        if(ability == null || ability.Length<=0) {return query;}
+        return query.Where(s=> s.MetaData.Ability != null &&
+                               s.MetaData.Ability.Any(t=> ability.Contains(t)));
     }
 
     public static IQueryable<Spell> FilterMinAverageDamage (this IQueryable<Spell> query, int? minAverageDamage)
@@ -108,80 +126,36 @@ public static class SpellQueryExtensions
         return query.Where(s=> s.MetaData.AverageDamage <= maxAverageDamage);
     }
 
-       public static IQueryable<Spell> FilterMinTargets(this IQueryable<Spell> query, int? minTargets)
-    {
-        if(minTargets  == null){ return query;}
-        return query.Where(s=> s.MetaData.Targets >= minTargets);
-    }
-
-    public static IQueryable<Spell> FilterMaxTargets(this IQueryable<Spell> query, int? maxTargets)
-    {
-        if(maxTargets == null){return query;}
-        return query.Where(s=> s.MetaData.Targets <= maxTargets);
-    }
-
-        public static IQueryable<Spell> FilterMinDuration(this IQueryable<Spell> query, int? minDuration)
-    {
-        if(minDuration == null) {return query;}
-        return query.Where(s=> s.MetaData.Duration >= minDuration);
-    }
-
-    public static IQueryable<Spell> FilterMaxDuration(this IQueryable<Spell> query, int? maxDuration)
-    {
-        if(maxDuration == null) {return query;}
-        return query.Where(s=> s.MetaData.Duration <= maxDuration); 
-    }
-
-    /// <summary>
-    /// Filters based on the damage dice type (e.g "d6", "d8").
-    /// Checks inside the JSON array within the Metadata column.
-    /// </summary>
-    public static IQueryable<Spell> FilterDamageDie(this IQueryable<Spell> query, string[]? damageDie)
-    {
+    public static IQueryable<Spell> FilterByDamageDie(this IQueryable<Spell> query, string[]? damageDie){
         if(damageDie == null || damageDie.Length<=0) {return query;}
         return query.Where(s=> s.MetaData.DamageDie != null &&
                                s.MetaData.DamageDie.Any(t=> damageDie.Contains(t)));
             
     }
 
-    public static IQueryable<Spell> FilterTargetRelationship(this IQueryable<Spell> query, string[]? targetRelationship)
+    public static IQueryable<Spell> FilterByDamageType(this IQueryable<Spell> query, string[]? damageType)
     {
-        if(targetRelationship==null || targetRelationship.Length<=0) { return query;}
-        return query.Where(s=> s.MetaData.TargetRelationship.Any(t=> targetRelationship.Contains(t)));
-    }
-    
-    //--- Relational Filters (One-to-Many ClassSpells)---
-    /// <summary>
-    /// Filters spells available to a specific Class (e.g. Wizard)
-    /// </summary>
-    public static IQueryable<Spell> FilterByClass (this IQueryable<Spell> query, string? spellList)
-    {
-        if(string.IsNullOrEmpty(spellList)) { return query;}
-        return query.Where(s => s.ClassSpells.Any(cs => cs.ClassName.ToLower() == spellList.ToLower()));
+        if(damageType == null || damageType.Length<=0) {return query;}
+        return query.Where(s=> s.MetaData.DamageType != null && 
+                               s.MetaData.DamageType.Any(t=> damageType.Contains(t)));
     }
 
-
-    /// <summary>
-    /// Filters spells with a minimum/maximum rating for a specific Class.
-    /// Required 'spellList' to be provided to  contextually check the rating.
-    /// </summary>
-    public static IQueryable<Spell> FilterByMinRating(this IQueryable<Spell> query, int? minRating, string spellList)
+    public static IQueryable<Spell> FilterByConditions(this IQueryable<Spell> query, string[]? conditions)
     {
-        if(minRating == null || string.IsNullOrEmpty(spellList)) {return query;}
-        return query.Where(s=> s.ClassSpells.Any(cs=> 
-                            cs.ClassName.ToLower() == spellList.ToLower() &&
-                            cs.Rating >= minRating
-        ));
+        if(conditions == null || conditions.Length <=0) { return query;}
+        return query.Where(s=> s.MetaData.Conditions != null &&
+                               s.MetaData.Conditions.Any(t=> conditions.Contains(t)));
     }
 
-    public static IQueryable<Spell> FilterByMaxRating (this IQueryable<Spell> query, int? maxRating, string spellList)
+    public static IQueryable<Spell> FilterByRating(this IQueryable<Spell> query, string[]? rating, string spellList)
     {
-        if(maxRating == null || string.IsNullOrEmpty(spellList)) {return query;}
-        return query.Where(s=> s.ClassSpells.Any(cs=>
-                                cs.ClassName.ToLower() == spellList.ToLower() &&
-                                cs.Rating <= maxRating
-        ));
+        if(rating == null || rating.Length <= 0) {return query;}
+        return query.Where(s=> s.ClassSpells.Any(cs =>
+                               cs.ClassName.ToLower() == spellList.ToLower() && 
+                               rating.Contains(cs.Rating)
+                           ));
     }
+
 
     //--- Core Logic ---
     /// <summary>
@@ -191,8 +165,13 @@ public static class SpellQueryExtensions
     public static IQueryable<Spell> ApplyPagination(this IQueryable<Spell> query, int page, int pageSize)
     {
         if(page <=0) page=1;
-        if(pageSize<=0) pageSize=20;
+        if(pageSize<=0) pageSize=500;
         return query.Skip((page-1)*pageSize).Take(pageSize);
+    }
+
+    public static IQueryable<Spell> OrderByName(this IQueryable<Spell> query)
+    {
+        return query.OrderBy(s=>s.Name);
     }
 
 
@@ -203,79 +182,31 @@ public static class SpellQueryExtensions
     public static IQueryable<Spell> ApplyFilters (this IQueryable<Spell> query, SpellFilterDto filters)
     {
         return query
-            .FilterByName(filters.Name)
-            .FilterByClass(filters.SpellList)
-            .FilterBySchool(filters.SchoolOfMagic)
+            .FilterBySpellList(filters.SpellList)
+            .FilterByName(filters.SpellName)
             .FilterByLevel(filters.Level)
-            .FilterBySource(filters.Source)
-            .FilterByTags(filters.Tags)
-            .FilterIsRitual(filters.IsRitual)
+            .FilterBySchool(filters.SchoolOfMagic)
             // JSON Filters
+            .FilterByActionType(filters.ActionType)
             .FilterMinCastingTime(filters.MinCastingTime)
             .FilterMaxCastingTime(filters.MaxCastingTime)
-            .FilterMinRange(filters.MinRange)
-            .FilterMaxRange(filters.MaxRange)
-            .FilterMinAverageDamage(filters.MinAverageDamage)
-            .FilterMaxAverageDamage(filters.MaxAverageDamage)
-            .FilterDamageDie(filters.DamageDie)
-            .FilterMinTargets(filters.MinTargets)
-            .FilterMaxTargets(filters.MaxTargets)
-            .FilterTargetRelationship(filters.TargetRelationship)
             .FilterMinDuration(filters.MinDuration)
             .FilterMaxDuration(filters.MaxDuration)
+            .FilterByComponents(filters.Components)
+            .FilterMinRange(filters.MinRange)
+            .FilterMaxRange(filters.MaxRange)
+            .FilterMinTargets(filters.MinTargets)
+            .FilterMaxTargets(filters.MaxTargets)
+            .FilterByTargetRelationship(filters.TargetRelationship)
+            .FilterByAttackType(filters.AttackType)
+            .FilterByRollType(filters.RollType)
+            .FilterByAbility(filters.Ability)
+            .FilterMinAverageDamage(filters.MinAverageDamage)
+            .FilterMaxAverageDamage(filters.MaxAverageDamage)
+            .FilterByDamageDie(filters.DamageDie)
+            .FilterByDamageType(filters.DamageType)
+            .FilterByConditions(filters.Conditions)
             // Relational Rating Filters
-            .FilterByMinRating(filters.MinRating, filters.SpellList)
-            .FilterByMaxRating(filters.MaxRating, filters.SpellList);
-        
+            .FilterByRating(filters.Rating, filters.SpellList);
     }
-
-    /// <summary>
-    /// Applies dynamic sorting based on the requested field and order (ASC/DESC)
-    /// Handles complex sorting logic for 'Rating' which depends on the selected Class.
-    /// </summary>
-    public static IQueryable<Spell> ApplySorting(this IQueryable<Spell> query, SpellFilterDto filter)
-    {
-        bool isDesc = !string.IsNullOrEmpty(filter.SortOrder) && filter.SortOrder.ToLower() == "desc";
-        string sortBy = string.IsNullOrEmpty(filter.SortBy) ? "name" : filter.SortBy.ToLower();
-
-        switch (sortBy)
-        {
-            case "level":
-                return isDesc 
-                    ? query.OrderByDescending(s=> s.Level).ThenBy(s=> s.Name)
-                    : query.OrderBy(s=> s.Level).ThenBy(s=> s.Name);
-            case "rating":
-            //If no class is selected, we cannot sort by rating. Fallback to sorting by name.
-                if (string.IsNullOrEmpty(filter.SpellList))
-                {
-                    return query.OrderBy(s=>s.Name);
-                }
-                //Sort by the rating of the specific class using a subquery select.
-                if (isDesc)
-                {
-                    return query
-                        .OrderByDescending(s=> s.ClassSpells
-                            .Where(cs=> cs.ClassName.ToLower() == filter.SpellList.ToLower())
-                            .Select(cs => cs.Rating)
-                            .FirstOrDefault())
-                        .ThenBy(s=> s.Name);
-                }
-                else
-                {
-                    return query 
-                        .OrderBy(s=> s.ClassSpells
-                            .Where(cs => cs.ClassName.ToLower() == filter.SpellList.ToLower())
-                            .Select(cs => cs.Rating)
-                            .FirstOrDefault())
-                        .ThenBy(s=> s.Name);
-                }
-                case "name":
-                default:
-                    return isDesc 
-                        ? query.OrderByDescending(s=> s.Name)
-                        : query.OrderBy(s=> s.Name);
-            
-        }
-    }
-
 }

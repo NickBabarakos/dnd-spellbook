@@ -21,7 +21,7 @@ namespace spellbook_backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ClassSpell", b =>
+            modelBuilder.Entity("spellbook_backend.Models.ClassSpell", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,8 +33,9 @@ namespace spellbook_backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
+                    b.Property<string>("Rating")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("SpellId")
                         .HasColumnType("integer");
@@ -62,11 +63,9 @@ namespace spellbook_backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsRitual")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("integer");
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -80,7 +79,7 @@ namespace spellbook_backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.PrimitiveCollection<string[]>("Tags")
+                    b.PrimitiveCollection<string[]>("SpellLists")
                         .IsRequired()
                         .HasColumnType("text[]");
 
@@ -89,7 +88,7 @@ namespace spellbook_backend.Migrations
                     b.ToTable("Spells");
                 });
 
-            modelBuilder.Entity("ClassSpell", b =>
+            modelBuilder.Entity("spellbook_backend.Models.ClassSpell", b =>
                 {
                     b.HasOne("spellbook_backend.Models.Spell", null)
                         .WithMany("ClassSpells")
@@ -105,39 +104,56 @@ namespace spellbook_backend.Migrations
                             b1.Property<int>("SpellId")
                                 .HasColumnType("integer");
 
-                            b1.Property<int?>("AverageDamage")
-                                .HasColumnType("integer")
-                                .HasAnnotation("Relational:JsonPropertyName", "averageDamage");
+                            b1.PrimitiveCollection<string[]>("Ability")
+                                .IsRequired()
+                                .HasColumnType("text[]");
 
-                            b1.Property<int?>("CastingTime")
-                                .HasColumnType("integer")
-                                .HasAnnotation("Relational:JsonPropertyName", "castingTime");
+                            b1.PrimitiveCollection<string[]>("ActionType")
+                                .IsRequired()
+                                .HasColumnType("text[]");
+
+                            b1.PrimitiveCollection<string[]>("AttackType")
+                                .IsRequired()
+                                .HasColumnType("text[]");
+
+                            b1.Property<int?>("AverageDamage")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("CastingTime")
+                                .HasColumnType("integer");
 
                             b1.PrimitiveCollection<string[]>("Components")
                                 .IsRequired()
-                                .HasColumnType("text[]")
-                                .HasAnnotation("Relational:JsonPropertyName", "components");
+                                .HasColumnType("text[]");
+
+                            b1.PrimitiveCollection<string[]>("Conditions")
+                                .IsRequired()
+                                .HasColumnType("text[]");
 
                             b1.PrimitiveCollection<string[]>("DamageDie")
-                                .HasColumnType("text[]")
-                                .HasAnnotation("Relational:JsonPropertyName", "damageDie");
+                                .IsRequired()
+                                .HasColumnType("text[]");
 
-                            b1.Property<int?>("Duration")
-                                .HasColumnType("integer")
-                                .HasAnnotation("Relational:JsonPropertyName", "duration");
+                            b1.PrimitiveCollection<string[]>("DamageType")
+                                .IsRequired()
+                                .HasColumnType("text[]");
 
-                            b1.Property<int?>("Range")
-                                .HasColumnType("integer")
-                                .HasAnnotation("Relational:JsonPropertyName", "range");
+                            b1.Property<int>("Duration")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Range")
+                                .HasColumnType("integer");
+
+                            b1.PrimitiveCollection<string[]>("RollType")
+                                .IsRequired()
+                                .HasColumnType("text[]");
 
                             b1.PrimitiveCollection<string[]>("TargetRelationship")
                                 .IsRequired()
-                                .HasColumnType("text[]")
-                                .HasAnnotation("Relational:JsonPropertyName", "targetRelationship");
+                                .HasColumnType("text[]");
 
                             b1.Property<int?>("Targets")
-                                .HasColumnType("integer")
-                                .HasAnnotation("Relational:JsonPropertyName", "targets");
+                                .HasColumnType("integer");
 
                             b1.HasKey("SpellId");
 

@@ -22,5 +22,5 @@ public class ClassSpell
     /// <summary>
     /// A custom rating (1-4) indicating how good this spell is for this specific class (from the Website RPGBOT)
     /// </summary>
-    public int Rating {get; set;}
+    public string Rating {get; set;} = string.Empty;
 }
