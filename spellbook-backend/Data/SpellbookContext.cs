@@ -24,7 +24,7 @@ public class SpellbookContext : DbContext
     /// <summary>
     /// Represents the join table linking Spells to Character Classes.
     /// </summary>
-    public DbSet<ClassSpell> ClassSpels {get; set;}
+    public DbSet<ClassSpell> ClassSpells {get; set;}
 
     /// <summary>
     /// Configures the database model using the Fluent API.

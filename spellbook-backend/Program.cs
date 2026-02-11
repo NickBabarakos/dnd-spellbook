@@ -49,7 +49,7 @@ if (app.Environment.IsDevelopment())
 
 //Redirects HTTP requests to HTTPS.
 //Can be commented out for local testing
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 //Enable CORS policy defined above.
 app.UseCors("AllowAll");

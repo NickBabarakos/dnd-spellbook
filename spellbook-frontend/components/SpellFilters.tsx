@@ -10,13 +10,14 @@ interface SpellFilterProps{
     updateFilters: (key: keyof FilterType, value: any) => void;
     clearFilters: () => void;
     buildQueryString: () => string;
+    onApply: ()=> void;
 }
 
-export default function SpellFilters({filters, updateFilters, clearFilters, buildQueryString}:SpellFilterProps){
+export default function SpellFilters({filters, updateFilters, clearFilters, buildQueryString, onApply}:SpellFilterProps){
     const levels = ["Cantrip", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9" ];
     const actionTypes = ["Healing", "Temporary Healing", "Damage", "Reviving", "Condition", "Advantage", "Disadvantage", "Ritual"];
     const schoolsOfMagic = ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy"];
-    const ratings = ["1 Star", "2 Stars", "3 stars", "4 stars"];
+    const ratings = ["1 Star", "2 Stars", "3 Stars", "4 Stars"];
     const components= ["Verbal", "Somatic", "Material"];
     const targetRelationships = ["Self", "Friendly", "Enemy"];
     const attackTypes = ["Melee", "Ranged", "Area of Effect"];
@@ -35,6 +36,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
                 <SearchInput 
                     inputValue={filters.spellName}
                     onChange={(val)=> updateFilters("spellName",val)}
+                    onEnter={onApply}
                 />
             </div>
 

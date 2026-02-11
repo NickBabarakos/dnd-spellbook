@@ -48,7 +48,7 @@ namespace spellbook_backend.Migrations
 
                     b.HasIndex("ClassName", "Rating");
 
-                    b.ToTable("ClassSpels");
+                    b.ToTable("ClassSpells");
                 });
 
             modelBuilder.Entity("spellbook_backend.Models.Spell", b =>

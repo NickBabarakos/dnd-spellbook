@@ -31,7 +31,7 @@ namespace spellbook_backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassSpels",
+                name: "ClassSpells",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -42,9 +42,9 @@ namespace spellbook_backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClassSpels", x => x.Id);
+                    table.PrimaryKey("PK_ClassSpells", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClassSpels_Spells_SpellId",
+                        name: "FK_ClassSpells_Spells_SpellId",
                         column: x => x.SpellId,
                         principalTable: "Spells",
                         principalColumn: "Id",
@@ -52,18 +52,18 @@ namespace spellbook_backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassSpels_ClassName",
-                table: "ClassSpels",
+                name: "IX_ClassSpells_ClassName",
+                table: "ClassSpells",
                 column: "ClassName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassSpels_ClassName_Rating",
-                table: "ClassSpels",
+                name: "IX_ClassSpells_ClassName_Rating",
+                table: "ClassSpells",
                 columns: new[] { "ClassName", "Rating" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassSpels_SpellId",
-                table: "ClassSpels",
+                name: "IX_ClassSpells_SpellId",
+                table: "ClassSpells",
                 column: "SpellId");
         }
 
@@ -71,7 +71,7 @@ namespace spellbook_backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ClassSpels");
+                name: "ClassSpells");
 
             migrationBuilder.DropTable(
                 name: "Spells");

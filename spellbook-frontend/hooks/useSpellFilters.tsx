@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export interface SpellFilters{
     spellName?: string;
@@ -26,8 +27,41 @@ export interface SpellFilters{
     conditions?: string[];
 }
 
+const ARRAY_KEYS: (keyof SpellFilters)[] =[
+    "level", "actionType", "schoolOfMagic", "rating", "components", "targetRelationship", "attackType", "rollType", "ability",
+    "damageDie", "damageType", "conditions"
+];
+
+const NUMBER_KEYS: (keyof SpellFilters)[] =[
+    "minCastingTime", "maxCastingTime", "minDuration", "maxDuration", "minRange", "maxRange", "minTargets", "maxTargets",
+    "minAverageDamage", "maxAverageDamage"
+];
+
+const STRING_KEYS: (keyof SpellFilters)[] = ["spellName"];
+
 export default function useSpellFilters(){
-    const [filters, setFilters] = useState<SpellFilters>({});
+    const searchParams = useSearchParams();
+
+    const [filters, setFilters] = useState<SpellFilters>(()=> {
+        const initialFilters: any = {};
+
+        ARRAY_KEYS.forEach((key)=> {
+            const values = searchParams.getAll(key);
+            if(values.length > 0){ initialFilters[key]= values;}
+        });
+
+        NUMBER_KEYS.forEach((key)=> {
+            const value = searchParams.get(key);
+            if(value){ initialFilters[key] = Number(value);}
+        });
+
+        STRING_KEYS.forEach((key) => {
+            const value = searchParams.get(key);
+            if(value){ initialFilters[key] = value;}
+        });
+
+        return initialFilters as SpellFilters;
+    });
 
     const updateFilters = (key: keyof SpellFilters, value: any) => {
         setFilters(prev => ({...prev, [key]:value}));
@@ -39,6 +73,10 @@ export default function useSpellFilters(){
 
     const buildQueryString = () => {
         const params = new URLSearchParams();
+
+        const currentSpellList = searchParams.get('spellList');
+
+        if(currentSpellList){ params.append('spellList', currentSpellList);}
 
         Object.entries(filters).forEach(([key,value]) => { 
             if(value === undefined || value === null || value === ""){return;}

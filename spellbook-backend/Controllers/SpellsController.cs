@@ -66,6 +66,19 @@ public class SpellsController : ControllerBase
         return Ok(spell);
     }
 
+    [HttpGet("by-name/{name}")]
+    public async Task<IActionResult> GetSpellByName(string name, [FromQuery] string? spellList)
+    {
+        var spell = await _context.Spells
+            .AsNoTracking()
+            .Where(s=> s.Name.ToLower() == name.ToLower())
+            .ProjectToDto(spellList)
+            .FirstOrDefaultAsync();
+
+            if(spell == null){ return NotFound($"Spell with name '{name} not found.");}
+            return Ok(spell);
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddSpell([FromBody] CreateSpellDto data)
     {

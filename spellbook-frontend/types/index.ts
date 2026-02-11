@@ -1,20 +1,19 @@
 export interface SpellMetaData{
-    castingTime: number | null;
-    range: number | null;
+    castingTime: number;
+    duration: number;
+    range: number;
     components: string[];
-    duration: number | null;
+    isRitual: boolean;
 
 }
 
 export interface SpellResponseData{
     id: number;
     name: string;
-    schoolOfMagic: string;
-    level: number;
+    level: string;
     source: string;
-    tags: string[];
-    isRitual: boolean;
-    rating: number;
+    schoolOfMagic: string;
+    rating: string;
     description: string;
     metaData: SpellMetaData;
 
@@ -24,4 +23,4 @@ export interface SpellSummary{
     id: number;
     name: string;
 };
-
+ 

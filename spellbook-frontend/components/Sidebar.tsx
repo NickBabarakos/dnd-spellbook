@@ -1,12 +1,12 @@
 'use client';
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SpellFilters from "./SpellFilters";
 import useSpellFilters from "@/hooks/useSpellFilters";
-import Button from "./button";
 
 export default function Sidebar(){
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { filters, updateFilters, clearFilters, buildQueryString} = useSpellFilters();
 
     const handleSearch = () => {
@@ -16,7 +16,10 @@ export default function Sidebar(){
 
     const handleClear = () => {
         clearFilters();
-        router.push('/spells');
+        const currentList = searchParams.get('spellList');
+        if(currentList){
+            router.push(`/spells?spellList=${currentList}`);
+        }else{router.push('/spells')};
     }
 
     return(
@@ -32,6 +35,7 @@ export default function Sidebar(){
                     updateFilters={updateFilters}
                     clearFilters={clearFilters}
                     buildQueryString={buildQueryString}
+                    onApply={handleSearch}
                 />
             </div>
 

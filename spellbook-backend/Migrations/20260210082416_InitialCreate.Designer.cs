@@ -11,7 +11,7 @@ using spellbook_backend.Data;
 namespace spellbook_backend.Migrations
 {
     [DbContext(typeof(SpellbookContext))]
-    [Migration("20260209195803_InitialCreate")]
+    [Migration("20260210082416_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -51,7 +51,7 @@ namespace spellbook_backend.Migrations
 
                     b.HasIndex("ClassName", "Rating");
 
-                    b.ToTable("ClassSpels");
+                    b.ToTable("ClassSpells");
                 });
 
             modelBuilder.Entity("spellbook_backend.Models.Spell", b =>
