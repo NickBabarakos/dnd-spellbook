@@ -23,7 +23,7 @@ export default function Sidebar(){
     }
 
     return(
-        <aside className="h-full flex flex-col bg-background border-r border-border overflow-hidden">
+        <aside className="h-full flex flex-col bg-background border-r border-border-subtle overflow-hidden">
             <div className="p-4 border-b border-border">
                 <h2 className="font-bold text-xl">Spell Filters</h2>
             </div>
@@ -42,12 +42,12 @@ export default function Sidebar(){
             <div className="flex flex-col gap-2 p-4 border-t border-border bg-background">
                 <button 
                     onClick={handleSearch}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition-colors">
+                    className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-2 rounded-lg transition-colors">
                         Apply Filters 
                 </button>
                 <button 
                     onClick={handleClear}
-                    className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 rounded-lg transition-colors"
+                    className="w-full bg-paper-hover hover:bg-border-subtle text-white font-bold py-3 rounded-lg transition-colors"
                 > Clear Filters
                 </button>
             </div>

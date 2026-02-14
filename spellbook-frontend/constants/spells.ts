@@ -1,0 +1,12 @@
+export const levels = ["Cantrip", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9" ] as const;
+export const actionTypes = ["Healing", "Temporary Healing", "Damage", "Reviving", "Condition", "Advantage", "Disadvantage", "Resistance", "Ritual"] as const;
+export const schoolsOfMagic = ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy"] as const;
+export const ratings = ["1 Star", "2 Stars", "3 Stars", "4 Stars"] as const;
+export const components= ["Verbal", "Somatic", "Material"] as const;
+export const targetRelationships = ["Self", "Friendly", "Enemy"] as const;
+export const attackTypes = ["Melee", "Ranged", "Area of Effect"] as const;
+export const rollTypes = ["Attack Roll", "Saving Throw"] as const;
+export const abilities = ["Strength", "Dexterity", "Constitution", "Intelligence", "Charisma"] as const;
+export const damageDie = ["d4", "d6", "d8", "d10", "d12"] as const;
+export const damageType = ["Piercing", "Bludgeoning", "Slashing", "Cold", "Fire", "Lightning", "Thunder", "Poison", "Acid", "Necrotic", "Radiant", "Force", "Psychic"] as const;
+export const conditions = ["Blinded", "Charmed", "Deafened", "Frightened", "Grappled", "Incapacitated", "Invisible", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Stunned", "Unconscious", "Exhaustion"] as const;

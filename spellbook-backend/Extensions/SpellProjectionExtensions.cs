@@ -20,12 +20,13 @@ public static class SpellProjectionExtensions
             Source = s.Source,
             SchoolOfMagic = s.SchoolOfMagic,
             //Conditional Projection based in external parameter (spellList). 
-            Rating = string.IsNullOrEmpty(spellList)
-                ? string.Empty 
-                : s.ClassSpells
-                    .Where(cs => cs.ClassName.ToLower() == spellList.ToLower())
-                    .Select(cs => cs.Rating)
-                    .FirstOrDefault() ?? string.Empty,
+            Ratings = s.ClassSpells 
+                .Where(cs => string.IsNullOrEmpty(spellList) || cs.ClassName.ToLower() == spellList.ToLower())
+                .Select(cs => new ClassRatingResponseDto
+                {
+                    ClassName = cs.ClassName,
+                    Rating = cs.Rating
+                }).ToList(),
 
             Description = s.Description,
             //Maps the internal domain model (SpellMetaData) to the public API model (SpellMetaDataResponseDto)
@@ -35,8 +36,18 @@ public static class SpellProjectionExtensions
                 Range = s.MetaData.Range,
                 Components = s.MetaData.Components, 
                 Duration = s.MetaData.Duration,
-                IsRitual = s.MetaData.ActionType != null && s.MetaData.ActionType.Contains("Ritual")
+                IsRitual = s.MetaData.ActionType != null && s.MetaData.ActionType.Contains("Ritual"),
+                Materials = s.MetaData.Materials ?? string.Empty
             }
+        });
+    }
+
+    public static IQueryable<SpellSummaryDto> ProjectToSummaryDto(this IQueryable<Spell> query)
+    {
+        return query.Select(s => new SpellSummaryDto
+        {
+            Id = s.Id,
+            Name = s.Name
         });
     }
 }

@@ -39,6 +39,7 @@ public class CreateSpellDto
     public string?[] DamageDie {get; set;} =[];
     public string?[] DamageType {get; set;} =[];
     public string?[] Conditions {get; set;} = [];
+    public string? Materials {get; set;}
   
 }
 
@@ -47,3 +48,4 @@ public class CreateClassRatingDto
     public string ClassName {get; set; } = string.Empty;
     public string Rating {get; set;} = string.Empty;
 }
+

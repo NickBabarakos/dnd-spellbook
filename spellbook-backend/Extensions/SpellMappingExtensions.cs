@@ -34,7 +34,8 @@ public static class SpellMappingExtensions
                 AverageDamage = req.AverageDamage,
                 DamageDie = req.DamageDie ?? [],
                 DamageType = req.DamageType ?? [],
-                Conditions = req.Conditions ?? []
+                Conditions = req.Conditions ?? [],
+                Materials = req.Materials
             } 
         };
     }

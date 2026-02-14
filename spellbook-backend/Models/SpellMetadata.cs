@@ -19,4 +19,5 @@ public class SpellMetaData
     public string?[] DamageDie {get; set;} =[];
     public string?[] DamageType {get; set;} =[];
     public string?[] Conditions {get; set;} = [];
+    public string? Materials {get; set;} = string.Empty;
 }

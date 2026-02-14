@@ -13,7 +13,7 @@ export default async function SpellsPage({searchParams}: SpellsPageProps){
     return(
         <div className="container mx-auto p-4">
             <div className="py-10">
-                <h1 className="text-4xl font-bold text-center mb-4">
+                <h1 className="text-4xl font-bold text-center mb-4 text-bright">
                     Spells for {selectedClass ? selectedClass.toUpperCase() : "All Classes"}
                 </h1>
             

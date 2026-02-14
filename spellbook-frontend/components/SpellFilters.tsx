@@ -3,7 +3,7 @@ import FilterAccordion from './FilterAccordion';
 import SearchInput from './SearchInput';
 import MultiSelectButtons from './MultiSelectButtons';
 import RangeFilter from './RangeFilter';
-import Button from './button';
+import * as SpellConstants from '@/constants/spells';
 
 interface SpellFilterProps{
     filters: FilterType;
@@ -14,18 +14,7 @@ interface SpellFilterProps{
 }
 
 export default function SpellFilters({filters, updateFilters, clearFilters, buildQueryString, onApply}:SpellFilterProps){
-    const levels = ["Cantrip", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9" ];
-    const actionTypes = ["Healing", "Temporary Healing", "Damage", "Reviving", "Condition", "Advantage", "Disadvantage", "Ritual"];
-    const schoolsOfMagic = ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy"];
-    const ratings = ["1 Star", "2 Stars", "3 Stars", "4 Stars"];
-    const components= ["Verbal", "Somatic", "Material"];
-    const targetRelationships = ["Self", "Friendly", "Enemy"];
-    const attackTypes = ["Melee", "Ranged", "Area of Effect"];
-    const rollTypes = ["Attack Roll", "Saving Throw"];
-    const abilities = ["Strength", "Dexterity", "Constitution", "Intelligence", "Charisma"];
-    const damageDie = ["d4", "d6", "d8", "d10", "d12"];
-    const damageType = ["Piercing", "Bludgeoning", "Slashing", "Cold", "Fire", "Lightning", "Thunder", "Poison", "Acid", "Necrotic", "Radiant", "Force", "Psychic"];
-    const conditions = ["Blinded", "Charmed", "Deafened", "Frightened", "Grappled", "Incapacitated", "Invisible", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Stunned", "Unconscious", "Exhaustion"];
+
 
     return(
         <div className="space-y-2 p-2">
@@ -42,7 +31,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Level" isActive={(filters.level?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={levels}
+                    options={[...SpellConstants.levels]}
                     selectedValues={filters.level || []}
                     onChange={(vals) => updateFilters("level", vals)}
                 />
@@ -50,7 +39,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Action Type" isActive={(filters.actionType?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={actionTypes}
+                    options={[...SpellConstants.actionTypes]}
                     selectedValues={filters.actionType || []}
                     onChange={(vals)=> updateFilters("actionType", vals)}
                 />
@@ -58,7 +47,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="School of Magic" isActive={(filters.schoolOfMagic?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={schoolsOfMagic}
+                    options={[...SpellConstants.schoolsOfMagic]}
                     selectedValues={filters.schoolOfMagic || []}
                     onChange={(vals)=> updateFilters("schoolOfMagic", vals)}
                 />
@@ -66,7 +55,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="RPGBOT Rating" isActive={(filters.rating?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={ratings}
+                    options={[...SpellConstants.ratings]}
                     selectedValues={filters.rating || []}
                     onChange={(vals)=> updateFilters("rating", vals)}
                 />
@@ -98,7 +87,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Components" isActive={(filters.components?.length || 0)>0 }>
                     <MultiSelectButtons
-                        options={components}
+                        options={[...SpellConstants.components]}
                         selectedValues={filters.components || []}
                         onChange={(vals)=> updateFilters("components", vals)}
                     />
@@ -129,7 +118,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Target Relationship" isActive={(filters.targetRelationship?.length || 0)>0}>
                 <MultiSelectButtons 
-                    options={targetRelationships}
+                    options={[...SpellConstants.targetRelationships]}
                     selectedValues={filters.targetRelationship || []}
                     onChange={(vals) => updateFilters("targetRelationship", vals)}
                 />
@@ -137,7 +126,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
             
             <FilterAccordion name="Attack Type" isActive={(filters.attackType?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={attackTypes}
+                    options={[...SpellConstants.attackTypes]}
                     selectedValues={filters.attackType || []}
                     onChange={(vals) => updateFilters("attackType", vals)}
                 />
@@ -145,7 +134,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Roll Type" isActive={(filters.rollType?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={rollTypes}
+                    options={[...SpellConstants.rollTypes]}
                     selectedValues={filters.rollType || []}
                     onChange={(vals)=> updateFilters("rollType",vals)}
                 />
@@ -153,7 +142,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Abilities" isActive={(filters.ability?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={abilities}
+                    options={[...SpellConstants.abilities]}
                     selectedValues={filters.ability || []}
                     onChange={(vals)=> updateFilters("ability", vals)}
                 />
@@ -172,7 +161,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Damage Die" isActive={(filters.damageDie?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={damageDie}
+                    options={[...SpellConstants.damageDie]}
                     selectedValues={filters.damageDie || []}
                     onChange={(vals) => updateFilters("damageDie", vals)}
                 />
@@ -180,7 +169,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Damage Type" isActive={(filters.damageType?.length || 0)>0}>
                 <MultiSelectButtons
-                    options={damageType}
+                    options={[...SpellConstants.damageType]}
                     selectedValues={filters.damageType || []}
                     onChange={(vals) => updateFilters("damageType",vals)}
                 />
@@ -188,7 +177,7 @@ export default function SpellFilters({filters, updateFilters, clearFilters, buil
 
             <FilterAccordion name="Conditions" isActive={(filters.conditions?.length || 0)>0}>
                 <MultiSelectButtons 
-                    options={conditions}
+                    options={[...SpellConstants.conditions]}
                     selectedValues={filters.conditions || []}
                     onChange={(vals) => updateFilters("conditions",vals)}
                 />

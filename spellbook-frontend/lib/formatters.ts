@@ -22,7 +22,14 @@ export function formatCastingTime(seconds: number):string{
     return getTimeText(seconds);
 }
 
+export function formatRange(range: number):string{
+    if(range === 0) return "Self";
+    if(range === 5) return "Self(5ft)";
+    return `${range} ft`; 
+}
+
 export function formatDuration(seconds: number):string{
     if(seconds === 0) return "Instantaneous";
+    if(seconds === 18) return "1 Round";
     return getTimeText(seconds);
 }

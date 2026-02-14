@@ -1,7 +1,7 @@
 interface SearchInputProps{
     inputValue?: string;
     onChange: (value: string | undefined ) => void;
-    onEnter?: () => void;
+    onEnter?: () => void; 
 }
 
 export default function SearchInput({inputValue, onChange, onEnter}: SearchInputProps){
@@ -24,10 +24,8 @@ export default function SearchInput({inputValue, onChange, onEnter}: SearchInput
                     value={inputValue ?? ''}
                     onChange={(e)=> handleInputChange(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className=" w-full bg-zinc-900 broder border-zinc-700 rounded-md 
-                                px-3 py-2 text-sm text-zinc-200 
-                                focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 
-                                transition-all duration-200 placeholder-zinc-500"
+                    className=" w-full bg-paper border border-border-subtle rounded-md px-3 py-2 text-sm text-foreground focus:outline-none
+                                focus:border-brand focus:ring-1 focus:ring-brand transition-all duration-200 placeholder-text-muted"
                 />
             </div>
         </div>

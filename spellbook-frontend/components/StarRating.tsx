@@ -11,11 +11,11 @@ export default function StarRating({rating}: StarRatingProps){
 
     const getColorClass = (count : number) => {
         switch(count) {
-            case 1: return "text-red-500";
-            case 2: return "text-orange-500";
-            case 3: return "text-green-500";
-            case 4: return "text-blue-500";
-            default: return "text-zinc-500";
+            case 1: return "text-star-1";
+            case 2: return "text-star-2";
+            case 3: return "text-star-3";
+            case 4: return "text-star-4";
+            default: return "text-muted";
         }
     };
 

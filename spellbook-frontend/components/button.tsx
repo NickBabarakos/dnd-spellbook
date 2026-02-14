@@ -11,7 +11,7 @@ export default function Button({children, onClick, className="", type="button"}:
         <button 
             type={type}
             onClick={onClick}
-            className={`px-6 py-2 font-bold transition-all active:scale-95 ${className}`}
+            className={`font-bold transition-all duration-200 active:scale-95 flex items-center justify-center tracking-widest ${className}`}
         >
             {children}
         </button>

@@ -1,48 +1,65 @@
 @import "tailwindcss";
 
 :root{
-  /*Basic Colors */
-  --background: #09090b;
-  --surface: #18181b;
-  --surface-hover: #27272a;
-  /*Text*/
-  --foreground: #fafafa;
-  --muted: #a1a1aa;
-  /*Accents (D&D Reds)*/
-  --primary: #dc2626;
-  --primary-hover: #ef4444;
-  --primary-deep: #7f1d1d;
-  /*Borders*/
-  --border: #27272a;
+  /*--- Grays/Blacks (Neutral)--- */
+  --bg-main: #09090b;
+  --bg-surface: #121214;
+  --bg-muted: #1e1e21;
+  
+  --border-subtle: #27272a;
+  --border-strong: #3f3f46;
+
+  --text-bright: #fafafa;
+  --text-main: #d4d4d8;
+  --text-muted: #a1a1aa;
+
+  /*--- D&D Red (Primary)---*/
+  --brand-red: #e11d48;
+  --brand-red-hover: #fb7185;
+  --brand-red-glow: rgba(225, 29, 72, 0.15);
+  
+  /* --- Star Rating ---*/
+  --rating-1: #ef4444; 
+  --rating-2: #f97316;
+  --rating-3: #22c55e;
+  --rating-4: #3b82f6;
 }
 
 @theme{
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
-  --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
-  --color-primary-deep: var(--primary-deep);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-}
+  --color-background: var(--bg-main);
+  --color-foreground: var(--text-main);
+
+  --color-paper: var(--bg-surface);
+  --color-paper-hover: var(--bg-muted);
+
+  --color-brand: var(--brand-red);
+  --color-brand-hover: var(--brand-red-hover);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+
+  /*Rating Colors*/
+  --color-star-1: var(--rating-1);
+  --color-star-2: var(--rating-2);
+  --color-star-3: var(--rating-3);
+  --color-star-4: var(--rating-4);
+  }
 
 body{
-  background-color: var(--background);
-  color:var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-main);
+  color:var(--text-main);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
 @utilty card{
-  background-color: var(--surface);
-  border: 1px solid var(--border);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 0.5rem;
   padding: 1rem;
   transition: all 0.2s ease-in-out;
   &:hover{
-    background-color: var(--surface-hover);
-    border-color: var(--primary);
+    background-color: var(--bg-muted);
+    border-color: var(--brand-red);
 
   }
 }

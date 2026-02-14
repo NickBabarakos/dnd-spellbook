@@ -8,9 +8,9 @@ interface ClassCardProps{
 export default function ClassCard({name, value}: ClassCardProps){
     return(
         <Link href={`/spells?spellList=${value}`}className="group">
-            <div className="bg-surface border border-border rounded-xl p-6 h-full transition-all duration-300 
-            hover:bg-surface-hover hover:border-primary hover:shadow-lg hover:shadow-primary/20">
-                <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+            <div className="bg-paper border border-border-subtle rounded-xl p-6 h-full transition-all duration-300 
+            hover:bg-paper-hover hover:border-brand hover:shadow-lg hover:shadow-brand/20">
+                <h3 className="text-xl font-bold text-bright group-hover:text-brand transition-colors">
                     {name}
                 </h3>
 

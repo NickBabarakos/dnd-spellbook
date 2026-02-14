@@ -1,6 +1,6 @@
-import {SpellResponseData} from "@/types";
+import {SpellResponseData, SpellSummary} from "@/types";
 
-const API_BASE_URL = process.env.API_URL; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL; 
 
 interface SearchParamsProps{
     [key: string]: string | string[] | undefined;
@@ -61,6 +61,25 @@ export async function fetchSpellByName(name: string, spellList: string): Promise
         return await res.json();
     }catch(error){
         console.error("Single Spell Fetch failed:", error);
+        return null;
+    }
+}
+
+export async function fetchSpellAllNames(): Promise<SpellSummary[] | null>{
+    let url = `${API_BASE_URL}/spells/names`;
+
+    try{
+        const res = await fetch(url, {
+            method: 'GET',
+            headers:{'Content-Type': 'application/json'}, 
+            cache: 'no-store'
+        });
+
+        if(res.status === 404){ return null;}
+        if(!res.ok){throw new Error('Failed to fetch the spell names');}
+        return await res.json();
+    }catch(error){
+        console.error("Spell Name Fetch failed:", error);
         return null;
     }
 }

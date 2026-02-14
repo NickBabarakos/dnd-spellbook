@@ -79,6 +79,18 @@ public class SpellsController : ControllerBase
             return Ok(spell);
     }
 
+    [HttpGet("names")]
+    public async Task<IActionResult> GetAllSpellNames()
+    {
+        var spells = await _context.Spells
+        .AsNoTracking()
+        .ProjectToSummaryDto()
+        .ToListAsync();
+
+        if(spells.Count == 0){return NotFound("No Spell Found in the db");}
+        return Ok(spells);
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddSpell([FromBody] CreateSpellDto data)
     {

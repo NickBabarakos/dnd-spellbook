@@ -4,7 +4,12 @@ export interface SpellMetaData{
     range: number;
     components: string[];
     isRitual: boolean;
+    materials: string;
+}
 
+export interface ClassRating{
+    className: string;
+    rating: string;
 }
 
 export interface SpellResponseData{
@@ -13,7 +18,7 @@ export interface SpellResponseData{
     level: string;
     source: string;
     schoolOfMagic: string;
-    rating: string;
+    ratings: ClassRating[];
     description: string;
     metaData: SpellMetaData;
 
@@ -24,3 +29,7 @@ export interface SpellSummary{
     name: string;
 };
  
+export interface sortConfig{
+    key: keyof SpellResponseData | string;
+    direction: 'asc' | 'desc' | null;
+}

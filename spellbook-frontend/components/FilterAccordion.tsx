@@ -21,8 +21,8 @@ export  default function FilterAccordion({children, name, isActive}:FilterProps)
                             border rounded-md transition-all duration-200
                             font-medium text-base group
                     ${isActive 
-                        ? 'border-red-500 text-red-500 bg-red-500/10'
-                        : 'border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:bg-zinc-800'
+                        ? 'border-brand text-brand bg-brand/10'
+                        : 'border-border-subtle text-foreground hover:border-border-strong hover:bg-paper-hover'
                     }`}
                 >
                     <span className="text-left">{name}</span>
@@ -38,7 +38,7 @@ export  default function FilterAccordion({children, name, isActive}:FilterProps)
                     </div>
             </button>
             {isOpen && (
-                <div className='filter-menu p-2 mt-1 border-x border-b border-zinc-800 rounded-b-md bg-zinc-900/50'>
+                <div className='filter-menu p-2 mt-1 border-x border-b border-border-subtle rounded-b-md bg-paper/50'>
                     {children}
                 </div>)}
         </div>

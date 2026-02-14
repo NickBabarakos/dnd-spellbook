@@ -27,8 +27,8 @@ export default function MultiSelectButtons({options, selectedValues, onChange}: 
                         onClick={()=> handleToggle(option)}
                         className={`px-3 py-1.5 rounded-md text-sx font-semibold transition-colors duration-200 border 
                                     ${isSelected 
-                                      ? 'bg-red-600 text-white border-red-600'                                                  //Selected
-                                      : 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-500 hover:text-white' //Not Selected
+                                      ? 'bg-brand text-white border-brand'                                                          //Selected
+                                      : 'bg-paper-hover text-muted border-border-subtle hover:border-border-strong hover:text-bright' //Not Selected
                                     }
                             `}
                     >{option}</button>
